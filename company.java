@@ -40,4 +40,15 @@ public class Company{
 		//IDK bruh
 	
 	}
+
+	public String getName(){
+		return this.name;
+	}
+	public int getStock(){
+		return this.stock;
+	}
+	public void setStock(int a){
+		this.stock = a;
+	}
+	
 }
