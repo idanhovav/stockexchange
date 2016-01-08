@@ -12,16 +12,18 @@ public class Company{
 	String name;
 	int stock;
 	float val;
-	float div; //percentage of stock value to give as div.
+	float div;
+	int period; //period of dividend payments
 	float x,y,z;
 	int posn;
 
-	public Company(String name, int stock, float val, float div,
+	public Company(String name, int stock, float val, float div, int period,
 				   float a, float b, float c, int posn){
 		this.name = name;
 		this.stock = stock;
 		this.val = val;
 		this.div = div;
+		this.period = period;
 		x = a;
 		y = b;
 		z = c;
@@ -29,15 +31,19 @@ public class Company{
 
 	}
 
-	public void calcVal(){
-		float t = stockexchange.time;
-		System.out.println(t);
+	public void calcVal(float t){
 		this.val = x*(Math.sin((y*t)/z));
 	
 	}
 	
-	public void giveDiv(int amount, float price){
-		//IDK bruh
+	public void giveDiv(Player a, float time){
+		if(time % this.period == 0){
+			float total = (this.div) * (float) (a.getStock(this.posn));
+			System.out.println(this.name + " is giving out dividends of" 
+							   + this.div + " for each stock." + a.getName()
+							   + " receives $" + total + ".");
+			a.setCash(a.getCash() + total);
+		}
 	
 	}
 
@@ -50,5 +56,16 @@ public class Company{
 	public void setStock(int a){
 		this.stock = a;
 	}
-	
+	public float getDiv(){
+		return this.div;
+	}
+	public void setDiv(float a){
+		this.div = a;
+	}
+	public int getPosn(){
+		return this.posn;
+	}
+	public void setPosn(int a){
+		this.posn = a;
+	}
 }
