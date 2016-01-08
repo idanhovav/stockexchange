@@ -26,18 +26,21 @@ public class Company{
 		x = a;
 		y = b;
 		this.posn = posn;
-		this.val = calcVal(0.0);
+		this.val = 0; //calcVal(0.0);
 	}
 
 	public void calcVal(float t){
-		this.val = x*(Math.sin(y*t));
+		this.val = x * (float) (Math.sin(y*t));
 	
+	}
+	public float getVal(){
+		return this.val;
 	}
 	
 	public void giveDiv(Player a, float time){
-		if(time % this.period == 0){
+		if(time % this.period == 0 && time != 0.0){
 			float total = (this.div) * (float) (a.getStock(this.posn));
-			System.out.println(this.name + " is giving out dividends of" 
+			System.out.println(this.name + " is giving out dividends of " 
 							   + this.div + " for each stock." + a.getName()
 							   + " receives $" + total + ".");
 			a.setCash(a.getCash() + total);

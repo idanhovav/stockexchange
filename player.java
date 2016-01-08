@@ -1,23 +1,26 @@
+import java.util.*;
+
+
 public class Player{
 	String name;
 	float networth;
 	float cash;
 	int[] stocks;
 
-	public Player(String name, float cash){
+	public Player(String name, float cash, int comp){
 		this.name = name;
 		this.cash = cash;
-		this.val = cash;
-		stocks = new int[stockexchange.comp];
+		stocks = new int[comp];
 		for(int stock : stocks){
 			stock = 0;
 		}
+		this.networth = this.cash;
 	}
 
-	public void calcNetworth(){
+	public void calcNetworth(Company[] comps){
 		float x = this.getCash();
 		for(int i = 0; i < stocks.length; i++){
-			x += (float)(stocks[i]) * stockexchange.comp[i].getVal();
+			x += (float)(stocks[i]) * comps[i].getVal();
 		}
 		this.networth = x;
 
@@ -26,10 +29,7 @@ public class Player{
 		return this.networth;
 	}
 	public void buyStock(Company a){
-
-		//get amount of stock
-
-
+		int amt = getAmt(a);
 		if(amt > a.getStock()){
 			System.out.println(amt + " stocks of " + a.getName() 
 							   + " is not available.");
@@ -39,26 +39,31 @@ public class Player{
 							   + " for this purchase.");
 		}
 		else{
-			a.setStock(a.getStock() - amt);
-			this.setCash(this.getCash() - ( amt * a.getVal() ));
-			this.setStock(a.getPosn(), this.getStock(a.getPosn()) + amt);
-			this.calcNetworth();
+			transaction(a, amt);
 		}
 	}
 	public void sellStock(Company a){
-
-		
-		//get amount of stock
-		
-
+		int amt = getAmt(a);
 		if(amt > this.getStock(a.getPosn())){
 			System.out.println(this.getName() + " does not have "
 							   + amt + " stocks of " + a.getName() 
 							   + ".");
 		}
 		else{
-			buyStock(a, -amt);
+			transaction(a, -amt);
 		}	
+	}
+	private void transaction(Company a, int amt){
+			a.setStock(a.getStock() - amt);
+			this.setCash(this.getCash() - ( amt * a.getVal() ));
+			this.setStock(a.getPosn(), this.getStock(a.getPosn()) + amt);
+	}
+	public int getAmt(Company a){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("How much of " + a.getName() + "'s stock would"
+			+ " you like to buy?");
+		System.out.println("Amount: ");
+		return Integer.parseInt(sc.next());
 	}
 
 	public int getStock(int i){
