@@ -12,27 +12,25 @@ public class Company{
 	String name;
 	int stock;
 	float val;
-	float div;
 	int period; //period of dividend payments
-	float x,y,z;
+	float div;
+	float x,y;
 	int posn;
 
-	public Company(String name, int stock, float val, float div, int period,
-				   float a, float b, float c, int posn){
+	public Company(String name, int stock, int period, float div,
+				   float a, float b, int posn){
 		this.name = name;
 		this.stock = stock;
-		this.val = val;
-		this.div = div;
 		this.period = period;
+		this.div = div;
 		x = a;
 		y = b;
-		z = c;
 		this.posn = posn;
-
+		this.val = calcVal(0.0);
 	}
 
 	public void calcVal(float t){
-		this.val = x*(Math.sin((y*t)/z));
+		this.val = x*(Math.sin(y*t));
 	
 	}
 	

@@ -25,7 +25,11 @@ public class Player{
 	public float getNetworth(){
 		return this.networth;
 	}
-	public void buyStock(Company a, int amt){
+	public void buyStock(Company a){
+
+		//get amount of stock
+
+
 		if(amt > a.getStock()){
 			System.out.println(amt + " stocks of " + a.getName() 
 							   + " is not available.");
@@ -40,15 +44,13 @@ public class Player{
 			this.setStock(a.getPosn(), this.getStock(a.getPosn()) + amt);
 			this.calcNetworth();
 		}
-		//check enough stock
-		//check enough money
-		//update company stock
-		//update player cash
-		//update player stock
-		//update networth
 	}
-	public void sellStock(Company a, int amt){
-		//check player has enough stock
+	public void sellStock(Company a){
+
+		
+		//get amount of stock
+		
+
 		if(amt > this.getStock(a.getPosn())){
 			System.out.println(this.getName() + " does not have "
 							   + amt + " stocks of " + a.getName() 
