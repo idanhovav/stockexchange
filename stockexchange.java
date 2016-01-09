@@ -5,6 +5,8 @@ Add info at the beginning of each round, maybe with a time delay.
 change everything from float to double goddamit.
 
 graphics.
+
+Play against computer?
 */
 
 /*
@@ -63,24 +65,27 @@ public class stockexchange{
 				c.calcVal(time);
 				c.giveDiv(p, time);
 			}
-			roundAnnouncements(p, comps, time);
-			response = ask(time, sc);
-			if(response.equals("p")){
-				time += 1.0;
-			}
-			else if(response.equals("q")){
-				endgame(p, sc);
-			}
-			else{
-				Company co = whichComp(comps, sc);
-				if(response.equals("b")){
-					p.buyStock(co, sc);
+			p.calcNetworth(comps);
+			response = "";
+			do{
+				roundAnnouncements(p, comps, time);
+				response = ask(time, sc);
+				if(response.equals("q")){
+					p.calcNetworth(comps);
+					endgame(p, sc);
 				}
-				if(response.equals("s")){
-					p.sellStock(co, sc);
+				else if(!response.equals("n")){
+					Company co = whichComp(comps, sc);
+					if(response.equals("b")){
+						p.buyStock(co, sc);
+					}
+					if(response.equals("s")){
+						p.sellStock(co, sc);
+					}
 				}
-				time += 1.0;
-			}
+			}while(!response.equals("n"));
+
+			time += 1.0;
 			p.calcNetworth(comps);
 			endingAnnouncements(p);
 		}
@@ -90,12 +95,12 @@ public class stockexchange{
 
 	public static String ask(float time, Scanner sc){
 		System.out.println("Round " + time + ": What do you want to do:");
-		String r = "p";
+		String r;
 		do{
-			System.out.println("B: buy \nS: sell \nP: pass\nQ: quit");
+			System.out.println("B: Buy \nS: Sell \nN: Next Round\nQ: Quit");
 			System.out.print("I want to: ");
 			r = sc.next().toLowerCase();
-		}while(!r.equals("b") && !r.equals("s") && !r.equals("p") &&
+		}while(!r.equals("b") && !r.equals("s") && !r.equals("n") &&
 			   !r.equals("q"));
 		return r;
 

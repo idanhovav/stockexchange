@@ -20,7 +20,7 @@ public class Player{
 	public void calcNetworth(Company[] comps){
 		float x = this.getCash();
 		for(int i = 0; i < stocks.length; i++){
-			x += (float)(stocks[i]) * comps[i].getVal();
+			x += (float)(getStock(i)) * comps[i].getVal();
 		}
 		this.networth = x;
 
