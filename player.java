@@ -28,8 +28,8 @@ public class Player{
 	public float getNetworth(){
 		return this.networth;
 	}
-	public void buyStock(Company a){
-		int amt = getAmt(a);
+	public void buyStock(Company a, Scanner sc){
+		int amt = getAmt(a, sc);
 		if(amt > a.getStock()){
 			System.out.println(amt + " stocks of " + a.getName() 
 							   + " is not available.");
@@ -42,8 +42,8 @@ public class Player{
 			transaction(a, amt);
 		}
 	}
-	public void sellStock(Company a){
-		int amt = getAmt(a);
+	public void sellStock(Company a, Scanner sc){
+		int amt = getAmt(a, sc);
 		if(amt > this.getStock(a.getPosn())){
 			System.out.println(this.getName() + " does not have "
 							   + amt + " stocks of " + a.getName() 
@@ -58,11 +58,11 @@ public class Player{
 			this.setCash(this.getCash() - ( amt * a.getVal() ));
 			this.setStock(a.getPosn(), this.getStock(a.getPosn()) + amt);
 	}
-	public int getAmt(Company a){
-		Scanner sc = new Scanner(System.in);
-		System.out.println("How much of " + a.getName() + "'s stock would"
-			+ " you like to buy?");
-		System.out.println("Amount: ");
+	public int getAmt(Company a, Scanner sc){
+		System.out.println("How much of " + a.getName() + "'s stock? Their " 
+			+ "value is " + a.getVal() +" per stock and " + this.getName()
+			+ " owns " + getStock(a.getPosn()) + " stocks.");
+		System.out.print("Amount: ");
 		return Integer.parseInt(sc.next());
 	}
 

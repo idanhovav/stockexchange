@@ -1,12 +1,5 @@
-/*
-Companies have a stock value that is based on their company value divided
-by the number of stocks they have.
-Companies can pay dividends.
-Company value can go up or down randomly (sin).
+import java.util.*;
 
-Variables x,y,z used for describing sin functions.
-
-*/
 
 public class Company{
 	String name;
@@ -14,23 +7,26 @@ public class Company{
 	float val;
 	int period; //period of dividend payments
 	float div;
-	float x,y;
+	float w,x,y,z;
 	int posn;
 
 	public Company(String name, int stock, int period, float div,
-				   float a, float b, int posn){
+				   float a, float b, float c, float d, int posn){
 		this.name = name;
 		this.stock = stock;
 		this.period = period;
 		this.div = div;
-		x = a;
-		y = b;
+		w = a;
+		x = b;
+		y = c;
+		z = d;
 		this.posn = posn;
-		this.val = 0; //calcVal(0.0);
+		Random gen = new Random();
+		this.val = 0;
 	}
 
 	public void calcVal(float t){
-		this.val = x * (float) (Math.sin(y*t));
+		this.val = x * (float) (z + (Math.sin(w + (y*t))));
 	
 	}
 	public float getVal(){
