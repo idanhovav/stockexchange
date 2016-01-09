@@ -27,6 +27,7 @@ public class stockexchange{
 		Company[] comps = new Company[comp];
 		int cash = Integer.parseInt(args[1]);
 		Scanner sc = new Scanner(System.in);
+		Turtle yertle = new Turtle(2.0, 2.0, 2.0);
 		
 		Player p = new Player(args[0], (float) cash, comp);
 
@@ -84,7 +85,8 @@ public class stockexchange{
 					}
 				}
 			}while(!response.equals("n"));
-
+			yertle.goForward(0.3);
+			yertle.turnLeft(0.7);
 			time += 1.0;
 			p.calcNetworth(comps);
 			endingAnnouncements(p);
