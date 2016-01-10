@@ -62,6 +62,25 @@ public class Turtle {
     public void setYscale(double min, double max) {
         StdDraw.setYscale(min, max);
     }
+    public void drawDesign(double length, int sides){
+        for(int i = 0; i < sides; i++){
+            this.goForward(length);
+            this.turnLeft(360.0/((double)(sides)));
+        }
+    }
+    public void drawDesignOpp(double length, int sides){
+        for(int i = 0; i < sides; i++){
+            this.goForward(length);
+            this.turnRight(360.0/((double)(sides)));
+        }
+    }
+    public void move(double x, double y){
+        this.x = x;
+        this.y = y;
+    }
+    public void turn(double a){
+        this.angle = a;
+    }
 
 
     // sample client for testing
