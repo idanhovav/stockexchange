@@ -9,6 +9,7 @@ public class Company{
 	float div;
 	float w,x,y,z;
 	int posn;
+	float delta;
 
 	public Company(String name, int stock, int period, float div,
 				   float a, float b, float c, float d, int posn){
@@ -23,6 +24,7 @@ public class Company{
 		this.posn = posn;
 		Random gen = new Random();
 		this.val = 0;
+		this.delta = 0;
 	}
 
 	public void calcVal(float t){
@@ -31,6 +33,12 @@ public class Company{
 	}
 	public float getVal(){
 		return this.val;
+	}
+	public void calcDelta(float t){
+		this.delta = y * (float) Math.cos(w + (y*t));
+	}
+	public float getDelta(){
+		return this.delta;
 	}
 	
 	public void giveDiv(Player a, float time){

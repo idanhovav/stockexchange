@@ -27,7 +27,9 @@ public class stockexchange{
 		Company[] comps = new Company[comp];
 		int cash = Integer.parseInt(args[1]);
 		Scanner sc = new Scanner(System.in);
-		Turtle yertle = new Turtle(2.0, 2.0, 2.0);
+
+		Turtle setupYertle = new Turtle(0.05, 0.05, 0.0);
+		Turtle[] compYertles = new Turtle[comps.length];
 		
 		Player p = new Player(args[0], (float) cash, comp);
 
@@ -56,16 +58,30 @@ public class stockexchange{
 			float z = (float)(1.0 + (gen.nextFloat()));
 
 			comps[i] = new Company(names[i], stock, period, div, w, x, y, z, i);
+			compYertles[i] = new Turtle(0.06, 0.06, 0.0);
 		}
+		boolean first = true;
+		setup(setupYertle);
 
 		//SETUP done.
 
 		String response;
 		while(true){
-			for(Company c : comps){
+			for(int i = 0; i < comps.length; i++){
+				Company c = comps[i];
 				c.calcVal(time);
+				c.calcDelta(time);
 				c.giveDiv(p, time);
+				Turtle yertle = compYertles[i];
+				if(first){
+					yertle.y = 0.06 + c.getVal()/10;
+				}
+				System.out.println(20*c.getDelta());
+				yertle.turnLeft(20*c.getDelta());
+				yertle.goForward(0.03);
+				yertle.turnRight(20*c.getDelta());
 			}
+			first = false;
 			p.calcNetworth(comps);
 			response = "";
 			do{
@@ -85,15 +101,36 @@ public class stockexchange{
 					}
 				}
 			}while(!response.equals("n"));
-			yertle.goForward(0.3);
-			yertle.turnLeft(0.7);
 			time += 1.0;
 			p.calcNetworth(comps);
 			endingAnnouncements(p);
 		}
 	}
 
-
+	public static void setup(Turtle yertle){
+		yertle.goForward(0.94);
+		yertle.x = 0.05;
+		yertle.y = 0.05;
+		yertle.turnLeft(90);
+		yertle.goForward(0.94);
+		yertle.x = 0.05;
+		yertle.y = 0.05;
+		for(int i = 0; i < 18; i ++){
+			yertle.x += 0.05;
+			yertle.y -= 0.01;
+			yertle.goForward(0.02);
+			yertle.y -= 0.01;
+		}
+		yertle.x = 0.05;
+		yertle.y = 0.05;
+		yertle.turnRight(90);
+		for(int i = 0; i < 18; i ++){
+			yertle.y += 0.05;
+			yertle.x -= 0.01;
+			yertle.goForward(0.02);
+			yertle.x -= 0.01;
+		}
+	}
 
 	public static String ask(float time, Scanner sc){
 		System.out.println("Round " + time + ": What do you want to do:");
